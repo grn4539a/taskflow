@@ -36,3 +36,21 @@ Taskflow/
   "dateCreation": "2026-10-30"
 }
 ```
+
+## Modèle complet :
+
+```
+{
+  "id": 1,
+  "titre": "Réviser le CSS",
+  "description": "Réviser Flexbox et Grid",
+  "priorite": "haute",
+  "echeance": "2026-11-15",
+  "statut": "a_faire",
+  "categorie": "cours",
+  "filiereId": 2,
+  "matiereId": 5,
+  "anneeEtude": "L2",
+  "dateCreation": "2026-10-30"
+}
+```

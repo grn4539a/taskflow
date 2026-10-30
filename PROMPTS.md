@@ -120,3 +120,48 @@ L'ia a réussi à nous donner des user stories qui marchent pour notre projet sa
   "dateCreation": "2026-10-30"
 }
 ```
+
+## Prompt 6 * Manque dans modèle de données (ChatGPT)
+
+**Prompt :** donne moi le modèle de données d'une tâche. Qu'est-ce qui manque à ce modèle pour ma fonctionnalité filière ?
+
+**Résultat :**
+
+```
+{
+  "id": 1,
+  "titre": "Réviser le CSS",
+  "description": "Réviser Flexbox et Grid",
+  "priorite": "haute",
+  "echeance": "2026-11-15",
+  "statut": "a_faire",
+  "categorie": "cours",
+  "dateCreation": "2026-10-30"
+}
+```
+
+**Ce qui manque :**
+
+| Champ | Type | Utilité |
+|---|---|---|
+| filiereId | Integer | Identifier la filière associée à la tâche |
+| matiereId | Integer (optionnel) | Associer la tâche à une matière |
+| anneeEtude | String (optionnel) | Identifier l'année d'étude concernée |
+
+**version finale :**
+
+```
+{
+  "id": 1,
+  "titre": "Réviser le CSS",
+  "description": "Réviser Flexbox et Grid",
+  "priorite": "haute",
+  "echeance": "2026-11-15",
+  "statut": "a_faire",
+  "categorie": "cours",
+  "filiereId": 2,
+  "matiereId": 5,
+  "anneeEtude": "L2",
+  "dateCreation": "2026-10-30"
+}
+```
