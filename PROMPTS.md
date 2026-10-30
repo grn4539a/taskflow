@@ -101,3 +101,22 @@ Mais, l'ia nous a donné des user stories trop avancés, donc retour au bercail.
 **Gardé :** 5 stories, pas de reformulation nécessaire.
 
 L'ia a réussi à nous donner des user stories qui marchent pour notre projet sans devoir cahngé cette fois-ci.
+
+## Prompt 5 * Modèle de données (ChatGPT)
+
+**prompt :** donne moi le Modèle de données d'une tâche
+
+**resultat :**
+
+```
+{
+  "id": 1,
+  "titre": "Réviser le CSS",
+  "description": "Réviser Flexbox et Grid",
+  "priorite": "haute",
+  "echeance": "2026-11-15",
+  "statut": "a_faire",
+  "categorie": "cours",
+  "dateCreation": "2026-10-30"
+}
+```

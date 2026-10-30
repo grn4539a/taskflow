@@ -22,6 +22,9 @@ Taskflow/
 └── style.css
 ```
 
+## Modèle de données :
+
+```
 {
   "id": 1,
   "titre": "Réviser le CSS",
@@ -32,5 +35,4 @@ Taskflow/
   "categorie": "cours",
   "dateCreation": "2026-10-30"
 }
-
-prompt: donne moi le Modèle de données d'une tâche
+```
