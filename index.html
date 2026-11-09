@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <h1>TaskFlow</h1>
+
+    <!-- Formulaire d'ajout -->
+    <form id="task-form" class="card">
+      <input type="text" id="task-title" placeholder="Titre de la tâche..." required>
+      
+      <div class="form-row">
+        <select id="task-priority">
+          <option value="haute">Haute</option>
+          <option value="moyenne" selected>Moyenne</option>
+          <option value="basse">Basse</option>
+        </select>
+
+        <select id="task-category">
+          <option value="cours">Cours</option>
+          <option value="perso">Perso</option>
+          <option value="projet">Projet</option>
+        </select>
+
+        <input type="date" id="task-due-date" required>
+        <button type="submit">Ajouter</button>
+      </div>
+    </form>
+
+    <!-- Contrôles : Filtres, Tris et Recherche -->
+    <div class="controls card">
+      <!-- 1. Filtrer par statut -->
+      <div class="filter-tabs">
+        <button class="tab-btn active" data-status="toutes">Toutes</button>
+        <button class="tab-btn" data-status="a_faire">À faire</button>
+        <button class="tab-btn" data-status="terminee">Terminées</button>
+      </div>
+
+      <!-- 2. Tri & 3. Recherche (Bonus) -->
+      <div class="filter-actions">
+        <input type="text" id="search-input" placeholder="🔍 Rechercher par mot-clé...">
+        
+        <select id="sort-select">
+          <option value="echeance-asc">Échéance : À venir en premier</option>
+          <option value="echeance-desc">Échéance : Plus tard en premier</option>
+          <option value="priorite-desc">Priorité : Haute d'abord</option>
+          <option value="priorite-asc">Priorité : Basse d'abord</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Liste des tâches -->
+    <ul id="task-list" class="task-list"></ul>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
