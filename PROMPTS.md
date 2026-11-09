@@ -185,3 +185,21 @@ L'ia a réussi à nous donner des user stories qui marchent pour notre projet sa
   "dateCreation": "2026-10-30"
 }
 ```
+
+## Prompt 8 * codage de l'application sprint 1 (gemini)
+
+**Prompt :** //Créer une tâche qui peux être modifiable //fais en sorte que la tâche peux être affiché, et peut être terminer (le tout est dans un fichier app.js)
+
+**Pourquoi les parenthèses ?** Je n'ai pas la possibilité d'avoir un agent IA payé par Ynov sous la main pour la journée, donc j'ai du utilisé la version gratuite.
+
+**Résultat :** Code complet dans app.js avec commentaires.
+
+**Suite :** Il est possible d'utiliser l'ia pour le code HTML correspondant pour lier ce fichier app.js, le code CSS pour styliser les tâches terminées (texte barré, etc.) ou une version qui sauvegarde les tâches dans le LocalStorage du navigateur.
+
+## Prompt 9 * codage de l'application sprint 1 partie 2 (gemini)
+
+**Prompt :** Peux tu me donner HTML et CSS correspondant ?
+
+**Résultat :** Code HTML et CSS correspondant pour les 2 fichiers.
+
+**suite :** sprint 2 disponible avec le même agent.
