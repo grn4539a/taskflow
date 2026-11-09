@@ -198,9 +198,9 @@ L'ia a réussi à nous donner des user stories qui marchent pour notre projet sa
 
 ## Prompt 9 * codage de l'application sprint 1 partie 2 (gemini)
 
-**Prompt :** Peux tu me donner HTML et CSS correspondant ?
+**Prompt :** Peux tu me donner le HTML et CSS correspondant ?
 
-**Résultat :** Code HTML et CSS correspondant pour les 2 fichiers.
+**Résultat :** Code HTML et CSS correspondant pour le fichier. (N.B. : Je sais que le fichier CSS devait être fait dans le sprint 2, c'est une erreur de ma part)
 
 **suite :** sprint 2 disponible avec le même agent.
 
@@ -211,5 +211,4 @@ L'ia a réussi à nous donner des user stories qui marchent pour notre projet sa
 **Résultat :** L'ia me montre où il a ajouter des lignes pour récupérer la liste de tâches
 
 **suite :** Sprint 3 en 2 différents morceaux...
-
 
