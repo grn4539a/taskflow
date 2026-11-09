@@ -3,8 +3,12 @@ const taskInput = document.getElementById('task-input');
 const addTaskBtn = document.getElementById('add-task-btn');
 const taskList = document.getElementById('task-list');
 
-// Tableau pour stocker les tâches
-let tasks = [];
+// Si aucune tâche n'existe, on initialise un tableau vide []
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
+
+function saveToLocalStorage() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+}
 
 // Fonction pour afficher les tâches
 function renderTasks() {
@@ -52,6 +56,7 @@ function addTask() {
     });
 
     taskInput.value = '';
+    saveToLocalStorage(); 
     renderTasks();
 }
 
@@ -61,6 +66,7 @@ function editTask(index, newText) {
         deleteTask(index);
     } else {
         tasks[index].text = newText.trim();
+        saveToLocalStorage(); 
         renderTasks();
     }
 }
@@ -68,12 +74,14 @@ function editTask(index, newText) {
 // Fonction pour basculer l'état (terminé / en cours)
 function toggleTask(index) {
     tasks[index].completed = !tasks[index].completed;
+    saveToLocalStorage(); 
     renderTasks();
 }
 
 // Fonction pour supprimer une tâche
 function deleteTask(index) {
     tasks.splice(index, 1);
+    saveToLocalStorage();
     renderTasks();
 }
 

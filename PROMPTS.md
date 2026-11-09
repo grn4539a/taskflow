@@ -203,3 +203,13 @@ L'ia a réussi à nous donner des user stories qui marchent pour notre projet sa
 **Résultat :** Code HTML et CSS correspondant pour les 2 fichiers.
 
 **suite :** sprint 2 disponible avec le même agent.
+
+## Prompt 10 * codage de l'application sprint 2 (gemini)
+
+**Prompt :** Peux-tu rajouter la persistance avec localstorage ?, montre moi où tu change le programme
+
+**Résultat :** L'ia me montre où il a ajouter des lignes pour récupérer la liste de tâches
+
+**suite :** Sprint 3 en 2 différents morceaux...
+
+
