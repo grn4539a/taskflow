@@ -100,9 +100,29 @@ Mais, l'ia nous a donné des user stories trop avancés, donc retour au bercail.
 
 **Gardé :** 5 stories, pas de reformulation nécessaire.
 
-L'ia a réussi à nous donner des user stories qui marchent pour notre projet sans devoir cahngé cette fois-ci.
+L'ia a réussi à nous donner des user stories qui marchent pour notre projet sans devoir changé cette fois-ci, mais l'application n'est que sur de la taskflow, pas sur un login ou sur la sécurité.
 
-## Prompt 5 * Modèle de données (ChatGPT)
+## Prompt 5 * user stories essai 5 (finale) (gemini)
+
+**Prompt :** Tu es un sénior développeur web (CETTE PERSPECTIVE) qui veux aider les nouveaux arrivants qui rentrent dans l'équipe. pas de mot de code dans les listes. Nous créons Taskflow, une app de tâches en HTML, CSS et JavaScript sans framework. Propose 5 user stories avec "En tant que... je veux... afin de...". pas de code. Réponse sous forme de liste.
+
+**Ce qui à changer : ** Il n'y a plus "pour le login" dans le prompt pour que taskflow ce basent sur l'application et non la sécurité du login.
+
+**Résultat :** 5 user stories proposées
+
+**Les 5 user stories en question :**
+
+• Création de tâche : En tant qu'utilisateur, je veux pouvoir saisir un titre et cliquer sur un bouton de validation afin d'ajouter une nouvelle action à ma liste quotidienne.
+
+• Suivi de progression : En tant qu'utilisateur, je veux cocher une case à côté d'une tâche afin de la marquer comme terminée et la distinguer visuellement des tâches en cours.
+
+• Nettoyage de l'espace : En tant qu'utilisateur, je veux cliquer sur une icône de corbeille afin de supprimer définitivement une tâche inutile ou créée par erreur.
+
+• Persistance des données : En tant qu'utilisateur, je veux retrouver ma liste intacte lorsque je ferme et rouvre mon navigateur afin de ne jamais perdre mon travail en cours.
+
+• Filtrage visuel : En tant qu'utilisateur, je veux cliquer sur des onglets de tri afin d'afficher uniquement les tâches actives, uniquement les tâches terminées, ou l'intégralité de ma liste.
+
+## Prompt 6 * Modèle de données (ChatGPT)
 
 **prompt :** donne moi le Modèle de données d'une tâche
 
@@ -121,7 +141,7 @@ L'ia a réussi à nous donner des user stories qui marchent pour notre projet sa
 }
 ```
 
-## Prompt 6 * Manque dans modèle de données (ChatGPT)
+## Prompt 7 * Manque dans modèle de données (ChatGPT)
 
 **Prompt :** donne moi le modèle de données d'une tâche. Qu'est-ce qui manque à ce modèle pour ma fonctionnalité filière ?
 
