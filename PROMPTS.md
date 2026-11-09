@@ -220,3 +220,21 @@ L'ia a réussi à nous donner des user stories qui marchent pour notre projet sa
 
 **Suite :** partie Développement du sprint 3
 
+## Prompt 12 * codage de l'application sprint 3 B (Dev) (Gemini)
+
+**Prompt :** 
+```
+Tri : par priorité ou par échéance.
+Filtres : par statut (Toutes, À faire, Terminées).
+Catégories avec couleur : (cours, perso, projet).
+(Bonus) Recherche : par mot-clé.
+fait moi ca
+```
+
+**Résultat :** Les 3 programmes changés mais qui retiennent les prompts d'avant.
+
+## Prompt 13 * finalisation du code (gemini)
+
+**Prompt :** Vous avez enlever le fait de pouvoir modifier le nom d'une tâche
+
+**Résultat :** app.js qui est remis dans le bon chemin.

@@ -1,115 +1,3 @@
-let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
-let currentFilter = 'toutes';
-let currentSort = 'echeance-asc';
-let searchQuery = '';
-
-const priorityWeights = { haute: 3, moyenne: 2, basse: 1 };
-
-// 1. Ajouter une tâche
-document.getElementById('task-form').addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  const newTask = {
-    id: Date.now(),
-    titre: document.getElementById('task-title').value,
-    priorite: document.getElementById('task-priority').value,
-    categorie: document.getElementById('task-category').value,
-    echeance: document.getElementById('task-due-date').value,
-    statut: 'a_faire'
-  };
-
-  tasks.push(newTask);
-  saveAndRender();
-  e.target.reset();
-});
-
-// 2. Filtrer par statut
-document.querySelectorAll('.tab-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-    currentFilter = btn.dataset.status;
-    renderTasks();
-  });
-});
-
-// 3. Trier par priorité ou échéance
-document.getElementById('sort-select').addEventListener('change', (e) => {
-  currentSort = e.target.value;
-  renderTasks();
-});
-
-// 4. Recherche par mot-clé (Bonus)
-document.getElementById('search-input').addEventListener('input', (e) => {
-  searchQuery = e.target.value.toLowerCase();
-  renderTasks();
-});
-
-function toggleStatus(id) {
-  tasks = tasks.map(t => t.id === id ? { ...t, statut: t.statut === 'a_faire' ? 'terminee' : 'a_faire' } : t);
-  saveAndRender();
-}
-
-function deleteTask(id) {
-  tasks = tasks.filter(t => t.id !== id);
-  saveAndRender();
-}
-
-function saveAndRender() {
-  localStorage.setItem('tasks', JSON.stringify(tasks));
-  renderTasks();
-}
-
-function renderTasks() {
-  // Application du filtre de statut
-  let result = tasks.filter(t => {
-    if (currentFilter === 'a_faire') return t.statut === 'a_faire';
-    if (currentFilter === 'terminee') return t.statut === 'terminee';
-    return true;
-  });
-
-  // Application de la recherche par mot-clé
-  if (searchQuery) {
-    result = result.filter(t => t.titre.toLowerCase().includes(searchQuery));
-  }
-
-  // Application du tri
-  result.sort((a, b) => {
-    if (currentSort === 'echeance-asc') return new Date(a.echeance) - new Date(b.echeance);
-    if (currentSort === 'echeance-desc') return new Date(b.echeance) - new Date(a.echeance);
-    if (currentSort === 'priorite-desc') return priorityWeights[b.priorite] - priorityWeights[a.priorite];
-    if (currentSort === 'priorite-asc') return priorityWeights[a.priorite] - priorityWeights[b.priorite];
-  });
-
-  // Affichage HTML
-  const listEl = document.getElementById('task-list');
-  listEl.innerHTML = result.map(t => `
-    <li class="task-item ${t.statut === 'terminee' ? 'done' : ''}">
-      <div>
-        <input type="checkbox" ${t.statut === 'terminee' ? 'checked' : ''} onchange="toggleStatus(${t.id})">
-        <span>${escapeHtml(t.titre)}</span>
-      </div>
-      <div>
-        <span class="badge badge-${t.categorie}">${t.categorie}</span>
-        <span class="badge badge-${t.priorite}">${t.priorite}</span>
-        <small>${formatDate(t.echeance)}</small>
-        <button onclick="deleteTask(${t.id})">🗑️</button>
-      </div>
-    </li>
-  `).join('');
-}
-
-function escapeHtml(str) {
-  return str.replace(/[&<>"']/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[m]));
-}
-
-function formatDate(dateStr) {
-  if (!dateStr) return '';
-  const [y, m, d] = dateStr.split('-');
-  return `${d}/${m}`;
-}
-
-renderTasks();
 // ==========================================
 // 1. SÉLECTION DES ÉLÉMENTS DU DOM
 // ==========================================
@@ -129,29 +17,32 @@ const reqLength = document.getElementById('req-length');
 const reqNumber = document.getElementById('req-number');
 const reqSpecial = document.getElementById('req-special');
 
-const taskInput = document.getElementById('task-input');
-const addTaskBtn = document.getElementById('add-task-btn');
+const taskForm = document.getElementById('task-form');
 const taskList = document.getElementById('task-list');
 const logoutBtn = document.getElementById('logout-btn');
+const sortSelect = document.getElementById('sort-select');
+const searchInput = document.getElementById('search-input');
 
 // ==========================================
 // 2. ÉTAT DE L'APPLICATION (STATE)
 // ==========================================
-let isLoginMode = true; // Alterne entre mode Connexion et Inscription
+let isLoginMode = true;
 let currentUser = localStorage.getItem('currentUser') || null; 
 let tasks = [];
+let currentFilter = 'toutes';
+let currentSort = 'echeance-asc';
+let searchQuery = '';
+
+const priorityWeights = { haute: 3, moyenne: 2, basse: 1 };
 
 // ==========================================
 // 3. LOGIQUE D'AUTHENTIFICATION & ROBUSTESSE
 // ==========================================
-
-// Fonction de contrôle de robustesse du mot de passe
 function checkPasswordStrength(password) {
     const hasMinLength = password.length >= 8;
     const hasNumber = /\d/.test(password);
     const hasSpecial = /[@$!%*?&]/.test(password);
 
-    // Mise à jour visuelle des prérequis
     reqLength.className = `req-item ${hasMinLength ? 'valid' : ''}`;
     reqLength.textContent = `${hasMinLength ? '✔' : '❌'} Au moins 8 caractères`;
 
@@ -164,14 +55,10 @@ function checkPasswordStrength(password) {
     return hasMinLength && hasNumber && hasSpecial;
 }
 
-// Écouteur en temps réel sur la saisie du mot de passe
 passwordInput.addEventListener('input', (e) => {
-    if (!isLoginMode) {
-        checkPasswordStrength(e.target.value);
-    }
+    if (!isLoginMode) checkPasswordStrength(e.target.value);
 });
 
-// Basculer entre Connexion et Inscription
 authToggleLink.addEventListener('click', (e) => {
     e.preventDefault();
     isLoginMode = !isLoginMode;
@@ -194,7 +81,6 @@ authToggleLink.addEventListener('click', (e) => {
     }
 });
 
-// Soumission du formulaire d'authentification
 authForm.addEventListener('submit', (e) => {
     e.preventDefault();
     const username = usernameInput.value.trim();
@@ -204,30 +90,22 @@ authForm.addEventListener('submit', (e) => {
     let users = JSON.parse(localStorage.getItem('users')) || {};
 
     if (isLoginMode) {
-        // Mode Connexion
         if (users[username] && users[username].password === password) {
             login(username);
         } else {
             showAuthError("Identifiant ou mot de passe incorrect.");
         }
     } else {
-        // Mode Inscription
         if (users[username]) {
             showAuthError("Cet identifiant existe déjà.");
             return;
         }
-
-        // Validation finale de robustesse
         if (!checkPasswordStrength(password)) {
             showAuthError("Le mot de passe ne respecte pas les critères de sécurité.");
             return;
         }
-
-        // Enregistrement du nouvel utilisateur
         users[username] = { password: password };
         localStorage.setItem('users', JSON.stringify(users));
-        
-        // Connexion automatique après inscription
         login(username);
     }
 });
@@ -250,101 +128,184 @@ logoutBtn.addEventListener('click', () => {
     initApp();
 });
 
-
 // ==========================================
 // 4. LOGIQUE GESTIONNAIRE DE TÂCHES
 // ==========================================
-
-function saveToLocalStorage() {
+function saveAndRender() {
     if (currentUser) {
-        // Clé unique par utilisateur pour ne pas mélanger les tâches
         localStorage.setItem(`tasks_${currentUser}`, JSON.stringify(tasks));
-    }
-}
-
-function renderTasks() {
-    taskList.innerHTML = '';
-
-    tasks.forEach((task, index) => {
-        const li = document.createElement('li');
-        li.className = `task-item ${task.completed ? 'completed' : ''}`;
-
-        const checkbox = document.createElement('input');
-        checkbox.type = 'checkbox';
-        checkbox.checked = task.completed;
-        checkbox.addEventListener('change', () => toggleTask(index));
-
-        const textInput = document.createElement('input');
-        textInput.type = 'text';
-        textInput.value = task.text;
-        textInput.className = 'task-text';
-        textInput.addEventListener('change', (e) => editTask(index, e.target.value));
-
-        const deleteBtn = document.createElement('button');
-        deleteBtn.textContent = 'Supprimer';
-        deleteBtn.className = 'delete-btn';
-        deleteBtn.addEventListener('click', () => deleteTask(index));
-
-        li.appendChild(checkbox);
-        li.appendChild(textInput);
-        li.appendChild(deleteBtn);
-        taskList.appendChild(li);
-    });
-}
-
-function addTask() {
-    const text = taskInput.value.trim();
-    if (text === '') return;
-
-    tasks.push({ text: text, completed: false });
-    taskInput.value = '';
-    saveToLocalStorage(); 
-    renderTasks();
-}
-
-function editTask(index, newText) {
-    if (newText.trim() === '') {
-        deleteTask(index);
-    } else {
-        tasks[index].text = newText.trim();
-        saveToLocalStorage();
         renderTasks();
     }
 }
 
-function toggleTask(index) {
-    tasks[index].completed = !tasks[index].completed;
-    saveToLocalStorage();
-    renderTasks();
-}
-
-function deleteTask(index) {
-    tasks.splice(index, 1);
-    saveToLocalStorage();
-    renderTasks();
-}
-
-// Écouteurs tâches
-addTaskBtn.addEventListener('click', addTask);
-taskInput.addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') addTask();
+taskForm.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const newTask = {
+    id: Date.now(),
+    titre: document.getElementById('task-title').value.trim(),
+    priorite: document.getElementById('task-priority').value,
+    categorie: document.getElementById('task-category').value,
+    echeance: document.getElementById('task-due-date').value,
+    statut: 'a_faire'
+  };
+  tasks.push(newTask);
+  saveAndRender();
+  e.target.reset();
 });
 
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    currentFilter = btn.dataset.status;
+    renderTasks();
+  });
+});
 
+sortSelect.addEventListener('change', (e) => {
+  currentSort = e.target.value;
+  renderTasks();
+});
+
+searchInput.addEventListener('input', (e) => {
+  searchQuery = e.target.value.toLowerCase();
+  renderTasks();
+});
+
+function toggleStatus(id) {
+  tasks = tasks.map(t => t.id === id ? { ...t, statut: t.statut === 'a_faire' ? 'terminee' : 'a_faire' } : t);
+  saveAndRender();
+}
+
+function deleteTask(id) {
+  tasks = tasks.filter(t => t.id !== id);
+  saveAndRender();
+}
+
+function editTaskTitle(id, newTitle) {
+    if (newTitle.trim() === '') {
+        deleteTask(id);
+    } else {
+        tasks = tasks.map(t => t.id === id ? { ...t, titre: newTitle.trim() } : t);
+        saveAndRender();
+    }
+}
+
+function renderTasks() {
+  taskList.innerHTML = '';
+
+  // 1. Filtrage statut
+  let result = tasks.filter(t => {
+    if (currentFilter === 'a_faire') return t.statut === 'a_faire';
+    if (currentFilter === 'terminee') return t.statut === 'terminee';
+    return true;
+  });
+
+  // 2. Filtrage recherche
+  if (searchQuery) {
+    result = result.filter(t => t.titre.toLowerCase().includes(searchQuery));
+  }
+
+  // 3. Tri
+    result.sort((a, b) => {
+    if (currentSort === 'echeance-asc') return new Date(a.echeance) - new Date(b.echeance);
+    if (currentSort === 'echeance-desc') return new Date(b.echeance) - new Date(a.echeance);
+    if (currentSort === 'priorite-desc') return priorityWeights[b.priorite] - priorityWeights[a.priorite];
+    if (currentSort === 'priorite-asc') return priorityWeights[a.priorite] - priorityWeights[b.priorite];
+    });
+
+  // 4. Génération du DOM
+    result.forEach(t => {
+    const li = document.createElement('li');
+    li.className = `task-item ${t.statut === 'terminee' ? 'done' : ''}`;
+
+    // Partie gauche (Checkbox + Titre)
+    const leftDiv = document.createElement('div');
+    
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.checked = t.statut === 'terminee';
+    checkbox.addEventListener('change', () => toggleStatus(t.id));
+
+    const textSpan = document.createElement('span');
+    textSpan.textContent = t.titre;
+    textSpan.title = "Double-cliquez pour modifier";
+
+    // 🔴 LOGIQUE DE MODIFICATION : Double-clic pour éditer le titre
+    textSpan.addEventListener('dblclick', () => {
+        if (t.statut === 'terminee') return; // Optionnel : empêche d'éditer une tâche finie
+
+        const inputEdit = document.createElement('input');
+        inputEdit.type = 'text';
+        inputEdit.value = t.titre;
+        inputEdit.className = 'task-inline-edit'; // Vous pouvez ajouter du style spécifique en CSS si besoin
+
+        // Sauvegarde lors de la validation
+        const saveEdit = () => {
+            editTaskTitle(t.id, inputEdit.value);
+        };
+
+        inputEdit.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') saveEdit();
+            if (e.key === 'Escape') renderTasks(); // Annule
+        });
+
+        inputEdit.addEventListener('blur', saveEdit);
+
+        // Remplacement temporaire du texte par le champ de saisie
+        leftDiv.replaceChild(inputEdit, textSpan);
+        inputEdit.focus();
+    });
+
+    leftDiv.appendChild(checkbox);
+    leftDiv.appendChild(textSpan);
+
+    // Partie droite (Badges + Date + Bouton)
+    const rightDiv = document.createElement('div');
+
+    const catBadge = document.createElement('span');
+    catBadge.className = `badge badge-${t.categorie}`;
+    catBadge.textContent = t.categorie;
+
+    const prioBadge = document.createElement('span');
+    prioBadge.className = `badge badge-${t.priorite}`;
+    prioBadge.textContent = t.priorite;
+
+    const dateEl = document.createElement('small');
+    dateEl.textContent = formatDate(t.echeance);
+
+    const deleteBtn = document.createElement('button');
+    deleteBtn.className = 'delete-btn';
+    deleteBtn.innerHTML = '🗑️';
+    deleteBtn.addEventListener('click', () => deleteTask(t.id));
+
+    rightDiv.appendChild(catBadge);
+    rightDiv.appendChild(prioBadge);
+    rightDiv.appendChild(dateEl);
+    rightDiv.appendChild(deleteBtn);
+
+    // Assemblage final
+    li.appendChild(leftDiv);
+    li.appendChild(rightDiv);
+    taskList.appendChild(li);
+    });
+}
+
+function formatDate(dateStr) {
+    if (!dateStr) return '';
+    const [y, m, d] = dateStr.split('-');
+    return `${d}/${m}`;
+}
 // ==========================================
 // 5. INITIALISATION ET ROUTING
 // ==========================================
 function initApp() {
     if (currentUser) {
-        // Utilisateur connecté : Afficher l'application
         loginScreen.classList.add('hidden');
         todoScreen.classList.remove('hidden');
-        
-        // Charger les tâches propres à cet utilisateur
         tasks = JSON.parse(localStorage.getItem(`tasks_${currentUser}`)) || [];
         renderTasks();
     } else {
-        // Utilisateur déconnecté : Afficher le formulaire d'accès
         loginScreen.classList.remove('hidden');
         todoScreen.classList.add('hidden');
         isLoginMode = true;
@@ -356,5 +317,4 @@ function initApp() {
     }
 }
 
-// Lancement au chargement de la page
 initApp();
