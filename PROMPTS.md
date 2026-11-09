@@ -185,3 +185,38 @@ L'ia a réussi à nous donner des user stories qui marchent pour notre projet sa
   "dateCreation": "2026-10-30"
 }
 ```
+
+## Prompt 8 * codage de l'application sprint 1 (gemini)
+
+**Prompt :** //Créer une tâche qui peux être modifiable //fais en sorte que la tâche peux être affiché, et peut être terminer (le tout est dans un fichier app.js)
+
+**Pourquoi les parenthèses ?** Je n'ai pas la possibilité d'avoir un agent IA payé par Ynov sous la main pour la journée, donc j'ai du utilisé la version gratuite.
+
+**Résultat :** Code complet dans app.js avec commentaires.
+
+**Suite :** Il est possible d'utiliser l'ia pour le code HTML correspondant pour lier ce fichier app.js, le code CSS pour styliser les tâches terminées (texte barré, etc.) ou une version qui sauvegarde les tâches dans le LocalStorage du navigateur.
+
+## Prompt 9 * codage de l'application sprint 1 partie 2 (gemini)
+
+**Prompt :** Peux tu me donner le HTML et CSS correspondant ?
+
+**Résultat :** Code HTML et CSS correspondant pour le fichier. (N.B. : Je sais que le fichier CSS devait être fait dans le sprint 2, c'est une erreur de ma part)
+
+**suite :** sprint 2 disponible avec le même agent.
+
+## Prompt 10 * codage de l'application sprint 2 (gemini)
+
+**Prompt :** Peux-tu rajouter la persistance avec localstorage ?, montre moi où tu change le programme
+
+**Résultat :** L'ia me montre où il a ajouter des lignes pour récupérer la liste de tâches
+
+**suite :** Sprint 3 en 2 différents morceaux...
+
+## Prompt 11 * codage de l'application sprint 3 A  (Cyber) (gemini)
+
+**Prompt :** peux-tu ajouter au programme totale un écran de connexion avec un contrôle de robustesse du mot de passe (robustesse étant longueur, chiffres, charactères spéciaux)
+
+**Résultat :** les 3 fichiers mis à jours, avec le programme qui bloque l'entré si le compte ne s'est pas identifié.
+
+**Suite :** partie Développement du sprint 3
+
