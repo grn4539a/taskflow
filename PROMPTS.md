@@ -212,3 +212,11 @@ L'ia a réussi à nous donner des user stories qui marchent pour notre projet sa
 
 **suite :** Sprint 3 en 2 différents morceaux...
 
+## Prompt 11 * codage de l'application sprint 3 A  (Cyber) (gemini)
+
+**Prompt :** peux-tu ajouter au programme totale un écran de connexion avec un contrôle de robustesse du mot de passe (robustesse étant longueur, chiffres, charactères spéciaux)
+
+**Résultat :** les 3 fichiers mis à jours, avec le programme qui bloque l'entré si le compte ne s'est pas identifié.
+
+**Suite :** partie Développement du sprint 3
+
